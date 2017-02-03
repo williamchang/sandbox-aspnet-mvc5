@@ -1,0 +1,61 @@
+﻿@model IEnumerable<SandboxAspnetMvc5.Web.ViewModels.AdminSystemSettingViewModel>
+
+@{
+	ViewBag.Title = "View System Setting";
+}
+
+<h2>View System Setting</h2>
+
+@if(Model.Count() >= 1 && ViewBag.ViewMode == "list") {
+<table>
+	<tr>
+		<th>@Html.DisplayNameFor(vm => vm.ApplicationName)</th>
+		<th>@Html.DisplayNameFor(vm => vm.Name)</th>
+		<th>@Html.DisplayNameFor(vm => vm.Value)</th>
+		<th>@Html.DisplayNameFor(vm => vm.DateModified)</th>
+		<th>Action</th>
+	</tr>
+	@foreach(var item in Model) {
+	<tr>
+		<td>@Html.DisplayFor(vm => item.ApplicationName)</td>
+		<td>@Html.DisplayFor(vm => item.Name)</td>
+		<td>@Html.DisplayFor(vm => item.Value)</td>
+		<td>@Html.DisplayFor(vm => item.DateModified)</td>
+		<td><ul class="action">
+			<li class="item">@Html.ActionLink("Details", "ViewSystemSetting", new { id = item.Id })</li>
+			<li class="item">@Html.ActionLink("Edit", "EditSystemSetting", new {id = item.Id})</li>
+			<li class="item">@using(Html.BeginForm("DeleteSystemSetting", "Admin", new { id = item.Id })) {<input type="submit" value="Delete" class="btn_link" />}</li>
+		</ul></td>
+	</tr>
+	}
+</table>
+
+<div>@Html.ActionLink("Create System Setting", "CreateSystemSetting")</div>
+} else {
+
+	var item = Model.FirstOrDefault();
+
+	if(item != null) {
+<dl>
+	<dt>@Html.DisplayNameFor(vm => vm.Id)</dt>
+	<dd>@Html.DisplayFor(vm => item.Id)</dd>
+
+	<dt>@Html.DisplayNameFor(vm => vm.ApplicationName)</dt>
+	<dd>@Html.DisplayFor(vm => item.ApplicationName)</dd>
+
+	<dt>@Html.DisplayNameFor(vm => vm.Name)</dt>
+	<dd>@Html.DisplayFor(vm => item.Name)</dd>
+
+	<dt>@Html.DisplayNameFor(vm => vm.Value)</dt>
+	<dd>@Html.DisplayFor(vm => item.Value)</dd>
+
+	<dt>@Html.DisplayNameFor(vm => vm.DateModified)</dt>
+	<dd>@Html.DisplayFor(vm => item.DateModified)</dd>
+</dl>
+
+<div>@Html.ActionLink("View System Settings", "ViewSystemSetting", new { id = String.Empty })</div>
+	} else {
+<p>No records found.</p>
+<div>@Html.ActionLink("Create System Setting", "CreateSystemSetting")</div>
+	}
+}

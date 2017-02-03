@@ -1,0 +1,45 @@
+﻿@model SandboxAspnetMvc5.Data.Entities.SystemLog
+
+@{
+	ViewBag.Title = "Create System Log";
+}
+
+<h2>Create System Setting</h2>
+
+@using (Html.BeginForm()) {
+
+@Html.AntiForgeryToken()
+
+<fieldset>
+	<div class="field">
+		<span class="fragment">@Html.LabelFor(model => model.Thread, htmlAttributes: new { @class = "label_default" })</span>
+		<span class="fragment">@Html.EditorFor(model => model.Thread, new { htmlAttributes = new { @class = "input_default" } })</span>
+		<span class="fragment">@Html.ValidationMessageFor(model => model.Thread, "", new { @class = "error_default" })</span>
+	</div>
+	<div class="field">
+		<span class="fragment">@Html.LabelFor(model => model.Level, htmlAttributes: new { @class = "label_default" })</span>
+		<span class="fragment">@Html.EditorFor(model => model.Level, new { htmlAttributes = new { @class = "input_default" } })</span>
+		<span class="fragment">@Html.ValidationMessageFor(model => model.Level, "", new { @class = "error_default" })</span>
+	</div>
+	<div class="field">
+		<span class="fragment">@Html.LabelFor(model => model.Logger, htmlAttributes: new { @class = "label_default" })</span>
+		<span class="fragment">@Html.EditorFor(model => model.Logger, new { htmlAttributes = new { @class = "input_default" } })</span>
+		<span class="fragment">@Html.ValidationMessageFor(model => model.Logger, "", new { @class = "error_default" })</span>
+	</div>
+	<div class="field">
+		<span class="fragment">@Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "label_default" })</span>
+		<span class="fragment">@Html.EditorFor(model => model.Message, new { htmlAttributes = new { @class = "input_default" } })</span>
+		<span class="fragment">@Html.ValidationMessageFor(model => model.Message, "", new { @class = "error_default" })</span>
+	</div>
+	<div class="field">
+		<span class="fragment">@Html.LabelFor(model => model.Exception, htmlAttributes: new { @class = "label_default" })</span>
+		<span class="fragment">@Html.EditorFor(model => model.Exception, new { htmlAttributes = new { @class = "input_default" } })</span>
+		<span class="fragment">@Html.ValidationMessageFor(model => model.Exception, "", new { @class = "error_default" })</span>
+	</div>
+	<div class="action">
+		<span class="fragment"><input type="submit" value="Create" class="btn_default" /></span>
+	</div>
+</fieldset>
+
+<div>@Html.ActionLink("View System Logs", "ViewSystemLog")</div>
+}

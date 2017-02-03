@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<!--[if ie]><meta http-equiv="X-UA-Compatible" content="chrome=1"><![endif]-->
+	<meta name="author" content="William Chang" />
+	<title>@ViewBag.Title - Boilerplate</title>
+	<!-- BEGIN: Page Specific Styles -->
+	<style type="text/css" media="all">
+/* Reset Elements */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}input,textarea,select{*font-size:100%;}legend{color:#000;}
+table {empty-cells:show;}
+object {display:block;}
+/* Base Elements */
+body {font-family:Verdana, Arial, Helvetica, sans-serif;font-size:14px;color:#000;}
+h1{font-size:138.5%;}h2{font-size:123.1%;}h3{font-size:108%;}h1,h2,h3{margin:1em 0;}h1,h2,h3,h4,h5,h6,strong{font-weight:bold;}abbr,acronym{border-bottom:1px dotted #000;cursor:help;}em{font-style:italic;}blockquote,ul,ol,dl{margin:1em;}ol,ul,dl{margin-left:2em;}ol li{list-style:decimal outside;}ul li{list-style:disc outside;}dl dd{margin-left:1em;}th,td{border:1px solid #000;padding:.5em;}th{font-weight:bold;text-align:center;}caption{margin-bottom:.5em;text-align:center;}p,fieldset,table,pre{margin-bottom:1em;}input[type=text],input[type=password],textarea{width:12.25em;*width:11.9em;}
+/* General */
+dl {}
+dl dt {font-weight:bold;}
+dl dd {}
+table {border-collapse:collapse;}
+table table {margin:0 0 20px 20px;}
+th, td {padding:4px;border:solid 1px #000;text-align:left;}
+#frame {margin:10px;}
+form {}
+form fieldset {}
+form fieldset .field {display:block;margin-bottom:10px;}
+form fieldset .field .fragment {display:block;margin-bottom:4px;}
+form fieldset .action {display:block;margin-bottom:10px;}
+form fieldset .action .fragment {display:inline-block;}
+form input[type=text] {width:256px;}
+.action {margin:0;padding:0;list-style:none;}
+.action .item {display:inline-block;margin-left:10px;}
+.action .item:first-child {margin-left:0;}
+.btn_link {border:0;background-color:transparent;text-decoration:underline;color:blue;text-align:left;cursor:pointer;}
+.btn_link::-moz-focus-inner {padding:0;border:0;}
+	</style>
+	<!-- END: Page Specific Styles -->
+</head>
+<body>
+<div id="frame">
+	<div id="region_column"><div id="region_column_buffer">
+		<div id="region_header">
+<!-- BEGIN: Region Header -->
+			<h1>@Html.ActionLink("Boilerplate", "Index", "Home", new { area = "" }, new { @class = "navigation_brand" })</h1>
+<!-- END: Region Header -->
+		</div>
+		<div id="region_middle">
+<!-- BEGIN: Template Region Middle -->
+			@RenderBody()
+<!-- END: Template Region Middle -->
+		</div>
+		<div id="region_bottom">
+<!-- BEGIN: Region Bottom -->
+			<ul class="navigation">
+				<li>@Html.ActionLink("Home", "Index", "Home")</li>
+				<li>@Html.ActionLink("About", "About", "Home")</li>
+				<li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+				<li>@Html.ActionLink("Sandbox", "Sandbox", "Home")</li>
+				<li>@Html.ActionLink("Admin", "Index", "Admin")</li>
+			</ul>
+<!-- END: Region Bottom -->
+		</div>
+		<div id="region_footer">
+<!-- BEGIN: Template Region Footer -->
+			<p>&copy; @DateTime.Now.Year Boilerplate</p>
+<!-- END: Template Region Footer -->
+		</div>
+	</div></div>
+</div>
+<!-- BEGIN: Scripts -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	//<![CDATA[
+// Register ready event to be executed when the DOM document has finished loading.
+jQuery(document).ready(function($) {
+	// Do something.
+});
+	//]]>
+	</script>
+	@RenderSection("scripts", required: false)
+<!-- END: Scripts -->
+</body>
+</html>

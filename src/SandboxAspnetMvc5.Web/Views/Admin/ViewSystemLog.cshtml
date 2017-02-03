@@ -1,0 +1,76 @@
+﻿@model IEnumerable<SandboxAspnetMvc5.Web.ViewModels.AdminSystemLogViewModel>
+
+@{
+	ViewBag.Title = "View System Log";
+}
+
+<h2>View System Setting</h2>
+
+@if(Model.Count() >= 1 && ViewBag.ViewMode == "list") {
+<table>
+	<tr>
+		<th>@Html.DisplayNameFor(vm => vm.Id)</th>
+		<th>@Html.DisplayNameFor(vm => vm.DateCreated)</th>
+		<th>@Html.DisplayNameFor(vm => vm.Thread)</th>
+		<th>@Html.DisplayNameFor(vm => vm.Level)</th>
+		<th>@Html.DisplayNameFor(vm => vm.Logger)</th>
+		<th>@Html.DisplayNameFor(vm => vm.Message)</th>
+		<th>@Html.DisplayNameFor(vm => vm.Exception)</th>
+		<th>Action</th>
+	</tr>
+	@foreach(var item in Model) {
+		<tr>
+			<td>@Html.DisplayFor(vm => item.Id)</td>
+			<td>@Html.DisplayFor(vm => item.DateCreated)</td>
+			<td>@Html.DisplayFor(vm => item.Thread)</td>
+			<td>@Html.DisplayFor(vm => item.Level)</td>
+			<td>@Html.DisplayFor(vm => item.Logger)</td>
+			<td>@Html.DisplayFor(vm => item.Message)</td>
+			<td>@Html.DisplayFor(vm => item.Exception)</td>
+			<td>
+				<ul class="action">
+					<li class="item">@Html.ActionLink("Details", "ViewSystemLog", new { id = item.Id })</li>
+					<li class="item">@Html.ActionLink("Edit", "EditSystemLog", new { id = item.Id })</li>
+					<li class="item">@using(Html.BeginForm("DeleteSystemLog", "Admin", new { id = item.Id })) {<input type="submit" value="Delete" class="btn_link" />}</li>
+				</ul>
+			</td>
+		</tr>
+	}
+</table>
+
+<div>@Html.ActionLink("Create System Log", "CreateSystemLog")</div>
+<div>@using(Html.BeginForm("DeleteSystemLogs", "Admin")) {<input type="submit" value="Delete All Logs" class="btn_link" />}</div>
+} else {
+
+	var item = Model.FirstOrDefault();
+
+	if(item != null) {
+<dl>
+	<dt>@Html.DisplayNameFor(vm => vm.Id)</dt>
+	<dd>@Html.DisplayFor(vm => item.Id)</dd>
+
+	<dt>@Html.DisplayNameFor(vm => vm.DateCreated)</dt>
+	<dd>@Html.DisplayFor(vm => item.DateCreated)</dd>
+
+	<dt>@Html.DisplayNameFor(vm => vm.Thread)</dt>
+	<dd>@Html.DisplayFor(vm => item.Thread)</dd>
+
+	<dt>@Html.DisplayNameFor(vm => vm.Level)</dt>
+	<dd>@Html.DisplayFor(vm => item.Level)</dd>
+
+	<dt>@Html.DisplayNameFor(vm => vm.Logger)</dt>
+	<dd>@Html.DisplayFor(vm => item.Logger)</dd>
+
+	<dt>@Html.DisplayNameFor(vm => vm.Message)</dt>
+	<dd>@Html.DisplayFor(vm => item.Message)</dd>
+
+	<dt>@Html.DisplayNameFor(vm => vm.Exception)</dt>
+	<dd>@Html.DisplayFor(vm => item.Exception)</dd>
+</dl>
+
+<div>@Html.ActionLink("View System Logs", "ViewSystemLog", new { id = String.Empty })</div>
+	} else {
+<p>No records found.</p>
+<div>@Html.ActionLink("Create System Log", "CreateSystemLog")</div>
+	}
+}
