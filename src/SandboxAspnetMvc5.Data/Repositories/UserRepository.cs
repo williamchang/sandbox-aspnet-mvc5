@@ -32,7 +32,7 @@ namespace SandboxAspnetMvc5.Data.Repositories {
 /// Data.Entities.UserProfile
 /// Data.Entities.UserSetting
 /// </remarks>
-public class UserRepository : BaseRepository, IUserRepository
+public class UserRepository : BaseRepository, Interfaces.IUserRepository
 {
     protected readonly string _sqlConnectionString;
 

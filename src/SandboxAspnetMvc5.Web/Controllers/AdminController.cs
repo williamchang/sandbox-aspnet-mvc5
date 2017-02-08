@@ -11,20 +11,20 @@ public class AdminController : BaseController
     new public static readonly string ObjectTypeName = "AdminController";
     new public static readonly string ObjectTypeFullName = String.Concat(ObjectTypeNamespace, ".", ObjectTypeName);
 
-    protected readonly Data.Repositories.ISystemRepository _repoSystem;
-    protected readonly Data.Repositories.IUserRepository _repoUser;
+    protected readonly Data.Interfaces.ISystemRepository _repoSystem;
+    protected readonly Data.Interfaces.IUserRepository _repoUser;
 
     /// <summary>Default constructor.</summary>
     public AdminController()
     {
         System.Diagnostics.Debug.WriteLine(String.Format("{0} : Constructor Started", ObjectTypeFullName));
-        _repoSystem = new Data.Repositories.SystemRepository(GetDatabaseString());
-        _repoUser = new Data.Repositories.UserRepository(GetDatabaseString());
+        _repoSystem = new Data.SQLite.Repositories.SystemRepository(GetDatabaseConnectionString("SQLite"));
+        _repoUser = new Data.Repositories.UserRepository(GetDatabaseConnectionString());
         System.Diagnostics.Debug.WriteLine(String.Format("{0} : Constructor Ended", ObjectTypeFullName));
     }
 
     /// <summary>Argument constructor.</summary>
-    public AdminController(Data.Repositories.ISystemRepository repoSystem, Data.Repositories.IUserRepository repoUser)
+    public AdminController(Data.Interfaces.ISystemRepository repoSystem, Data.Interfaces.IUserRepository repoUser)
     {
         _repoSystem = repoSystem;
         _repoUser = repoUser;
@@ -194,7 +194,11 @@ public class AdminController : BaseController
     public ActionResult ViewSystemLog(int? id)
     {
         if(id != null) {
-            var objs1 = Helpers.CollectionHelper.AsSingleEnumerable<Data.Entities.SystemLog>(_repoSystem.GetLog(id ?? 0)).Select(x => new ViewModels.AdminSystemLogViewModel() {
+            var obj1 = _repoSystem.GetLog(id ?? 0);
+            if(obj1 == null) {
+                return HttpNotFound();
+            }
+            var objs1 = Helpers.CollectionHelper.AsSingleEnumerable<Data.Entities.SystemLog>(obj1).Select(x => new ViewModels.AdminSystemLogViewModel() {
                 Id = x.Id,
                 DateCreated = x.DateCreated,
                 Thread = x.Thread,
@@ -218,7 +222,7 @@ public class AdminController : BaseController
             if(objs1 == null) {
                 return HttpNotFound();
             }
-            ViewBag.Mode = "list";
+            ViewBag.ViewMode = "list";
             return View(objs1);
         }
     }
@@ -228,7 +232,11 @@ public class AdminController : BaseController
     public ActionResult ViewSystemSetting(Guid? id)
     {
         if(id != null) {
-            var objs1 = Helpers.CollectionHelper.AsSingleEnumerable<Data.Entities.SystemSetting>(_repoSystem.GetSetting(id ?? Guid.Empty)).Select(x => new ViewModels.AdminSystemSettingViewModel() {
+            var obj1 = _repoSystem.GetSetting(id ?? Guid.Empty);
+            if(obj1 == null) {
+                return HttpNotFound();
+            }
+            var objs1 = Helpers.CollectionHelper.AsSingleEnumerable<Data.Entities.SystemSetting>(obj1).Select(x => new ViewModels.AdminSystemSettingViewModel() {
                 Id = x.Id,
                 ApplicationName = x.ApplicationName,
                 Name = x.Name,

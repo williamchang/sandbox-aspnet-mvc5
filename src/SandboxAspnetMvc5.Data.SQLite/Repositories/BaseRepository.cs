@@ -6,8 +6,8 @@
 @version
     0.1
 @date
-    - Created: 2015-08-20
-    - Modified: 2015-08-31
+    - Created: 2017-02-06
+    - Modified: 2017-02-07
     .
 @note
     References:
@@ -21,15 +21,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SandboxAspnetMvc5.Data.Repositories {
+namespace SandboxAspnetMvc5.Data.SQLite.Repositories {
 
 /// <summary>Base Repository.</summary>
-public class BaseRepository : Interfaces.IBaseRepository
+public class BaseRepository : Data.Interfaces.IBaseRepository
 {
     protected Entities.SystemLog _sysError = null;
 
     /// <summary>Default constructor.</summary>
     protected BaseRepository() {}
+
+    public void CreateDatabase()
+    {
+        System.Data.SQLite.SQLiteConnection.CreateFile("Sandbox.sqlite3");
+    }
 }
 
 }

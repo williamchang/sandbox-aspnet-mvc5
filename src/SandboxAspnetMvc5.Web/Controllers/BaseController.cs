@@ -58,9 +58,9 @@ public abstract class BaseController : Controller
 
     /// <summary>Get database connection string.</summary>
     [NonAction]
-    public string GetDatabaseString()
+    public string GetDatabaseConnectionString(string name = "Default")
     {
-        var dbConnectionStringSettings = System.Configuration.ConfigurationManager.ConnectionStrings["Default"];
+        var dbConnectionStringSettings = System.Configuration.ConfigurationManager.ConnectionStrings[name];
         if(dbConnectionStringSettings != null && !String.IsNullOrEmpty(dbConnectionStringSettings.ConnectionString)) {
             return dbConnectionStringSettings.ConnectionString;
         } else {

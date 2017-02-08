@@ -4,10 +4,10 @@
 @author
     William Chang
 @version
-    0.2
+    0.1
 @date
-    - Created: 2015-08-20
-    - Modified: 2016-10-22
+    - Created: 2017-02-06
+    - Modified: 2017-02-07
     .
 @note
     References:
@@ -21,14 +21,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SandboxAspnetMvc5.Data.Repositories {
+namespace SandboxAspnetMvc5.Data.SQLite.Repositories {
 
 /// <summary>System repository.</summary>
 /// <remarks>
 /// Dependencies:
 /// Data.Entities.SystemSetting
 /// </remarks>
-public class SystemRepository : BaseRepository, Interfaces.ISystemRepository
+public class SystemRepository : BaseRepository, Data.Interfaces.ISystemRepository
 {
     protected readonly string _sqlConnectionString;
 
@@ -44,7 +44,7 @@ public class SystemRepository : BaseRepository, Interfaces.ISystemRepository
     /// <summary>Create (INSERT) system log.</summary>
     public Entities.SystemLog CreateLog(Entities.SystemLog l)
     {
-        using(var sqlConnection = new System.Data.SqlClient.SqlConnection(_sqlConnectionString))
+        using(var sqlConnection = new System.Data.SQLite.SQLiteConnection(_sqlConnectionString))
         using(var sqlCommand = sqlConnection.CreateCommand()) {
             sqlConnection.Open();
             sqlCommand.CommandText = "INSERT INTO SystemLog (DateCreated, Thread, Level, Logger, Message, Exception) VALUES (@DateCreated, @Thread, @Level, @Logger, @Message, @Exception);";
@@ -65,11 +65,11 @@ public class SystemRepository : BaseRepository, Interfaces.ISystemRepository
     /// <summary>Create (INSERT) system setting.</summary>
     public Entities.SystemSetting CreateSetting(Entities.SystemSetting s)
     {
-        using(var sqlConnection = new System.Data.SqlClient.SqlConnection(_sqlConnectionString))
+        using(var sqlConnection = new System.Data.SQLite.SQLiteConnection(_sqlConnectionString))
         using(var sqlCommand = sqlConnection.CreateCommand()) {
             sqlConnection.Open();
             sqlCommand.CommandText = "INSERT INTO SystemSetting (Id, ApplicationName, Name, Value, DateModified) VALUES (@Id, @ApplicationName, @Name, @Value, @DateModified);";
-            sqlCommand.Parameters.AddWithValue("@Id", s.Id);
+            sqlCommand.Parameters.AddWithValue("@Id", s.Id.ToString());
             sqlCommand.Parameters.AddWithValue("@ApplicationName", s.ApplicationName);
             sqlCommand.Parameters.AddWithValue("@Name", s.Name);
             sqlCommand.Parameters.AddWithValue("@Value", s.Value);
@@ -85,7 +85,7 @@ public class SystemRepository : BaseRepository, Interfaces.ISystemRepository
     /// <summary>Delete system log permanently.</summary>
     public void DeleteLog(int id)
     {
-        using(var sqlConnection = new System.Data.SqlClient.SqlConnection(_sqlConnectionString))
+        using(var sqlConnection = new System.Data.SQLite.SQLiteConnection(_sqlConnectionString))
         using(var sqlCommand = sqlConnection.CreateCommand()) {
             sqlConnection.Open();
             sqlCommand.CommandText = "DELETE FROM SystemLog WHERE Id = @Id;";
@@ -100,10 +100,10 @@ public class SystemRepository : BaseRepository, Interfaces.ISystemRepository
     /// <summary>Delete system logs permanently (everything).</summary>
     public void DeleteLogs()
     {
-        using(var sqlConnection = new System.Data.SqlClient.SqlConnection(_sqlConnectionString))
+        using(var sqlConnection = new System.Data.SQLite.SQLiteConnection(_sqlConnectionString))
         using(var sqlCommand = sqlConnection.CreateCommand()) {
             sqlConnection.Open();
-            sqlCommand.CommandText = "DELETE FROM SystemLog;DBCC CHECKIDENT('SystemLog', RESEED, 0);";
+            sqlCommand.CommandText = "DELETE FROM SystemLog;";
             var numRowsAffected = sqlCommand.ExecuteNonQuery();
             if(numRowsAffected <= 0) {
                 throw new Exception(String.Format("numRowsAffected:{0}", numRowsAffected));
@@ -114,11 +114,11 @@ public class SystemRepository : BaseRepository, Interfaces.ISystemRepository
     /// <summary>Delete system setting permanently.</summary>
     public void DeleteSetting(Guid id)
     {
-        using(var sqlConnection = new System.Data.SqlClient.SqlConnection(_sqlConnectionString))
+        using(var sqlConnection = new System.Data.SQLite.SQLiteConnection(_sqlConnectionString))
         using(var sqlCommand = sqlConnection.CreateCommand()) {
             sqlConnection.Open();
             sqlCommand.CommandText = "DELETE FROM SystemSetting WHERE Id = @Id;";
-            sqlCommand.Parameters.AddWithValue("@Id", id);
+            sqlCommand.Parameters.AddWithValue("@Id", id.ToString());
             var numRowsAffected = sqlCommand.ExecuteNonQuery();
             if(numRowsAffected <= 0) {
                 throw new Exception(String.Format("numRowsAffected:{0}", numRowsAffected));
@@ -129,7 +129,7 @@ public class SystemRepository : BaseRepository, Interfaces.ISystemRepository
     /// <summary>Delete system setting permanently (duplicates are removed).</summary>
     public void DeleteSetting(string name)
     {
-        using(var sqlConnection = new System.Data.SqlClient.SqlConnection(_sqlConnectionString))
+        using(var sqlConnection = new System.Data.SQLite.SQLiteConnection(_sqlConnectionString))
         using(var sqlCommand = sqlConnection.CreateCommand()) {
             sqlConnection.Open();
             sqlCommand.CommandText = "DELETE FROM SystemSetting WHERE Name = @Name;";
@@ -144,7 +144,7 @@ public class SystemRepository : BaseRepository, Interfaces.ISystemRepository
     /// <summary>Get system log.</summary>
     public Entities.SystemLog GetLog(int id)
     {
-        using(var sqlConnection = new System.Data.SqlClient.SqlConnection(_sqlConnectionString))
+        using(var sqlConnection = new System.Data.SQLite.SQLiteConnection(_sqlConnectionString))
         using(var sqlCommand = sqlConnection.CreateCommand()) {
             sqlConnection.Open();
             sqlCommand.CommandText = "SELECT * FROM SystemLog WHERE Id = @Id;";
@@ -167,7 +167,7 @@ public class SystemRepository : BaseRepository, Interfaces.ISystemRepository
     /// <summary>Get system logs.</summary>
     public IList<Entities.SystemLog> GetLogs()
     {
-        using(var sqlConnection = new System.Data.SqlClient.SqlConnection(_sqlConnectionString))
+        using(var sqlConnection = new System.Data.SQLite.SQLiteConnection(_sqlConnectionString))
         using(var sqlCommand = sqlConnection.CreateCommand()) {
             sqlConnection.Open();
             sqlCommand.CommandText = "SELECT * FROM SystemLog ORDER BY id ASC;";
@@ -192,11 +192,11 @@ public class SystemRepository : BaseRepository, Interfaces.ISystemRepository
     /// <summary>Get system setting.</summary>
     public Entities.SystemSetting GetSetting(Guid id)
     {
-        using(var sqlConnection = new System.Data.SqlClient.SqlConnection(_sqlConnectionString))
+        using(var sqlConnection = new System.Data.SQLite.SQLiteConnection(_sqlConnectionString))
         using(var sqlCommand = sqlConnection.CreateCommand()) {
             sqlConnection.Open();
             sqlCommand.CommandText = "SELECT * FROM SystemSetting WHERE Id = @Id;";
-            sqlCommand.Parameters.AddWithValue("@Id", id);
+            sqlCommand.Parameters.AddWithValue("@Id", id.ToString());
             using(var sqlReader = sqlCommand.ExecuteReader()) {
                 if(!sqlReader.Read()) {return null;}
                 return new Entities.SystemSetting {
@@ -213,7 +213,7 @@ public class SystemRepository : BaseRepository, Interfaces.ISystemRepository
     /// <summary>Get system setting.</summary>
     public Entities.SystemSetting GetSetting(string name)
     {
-        using(var sqlConnection = new System.Data.SqlClient.SqlConnection(_sqlConnectionString))
+        using(var sqlConnection = new System.Data.SQLite.SQLiteConnection(_sqlConnectionString))
         using(var sqlCommand = sqlConnection.CreateCommand()) {
             sqlConnection.Open();
             sqlCommand.CommandText = "SELECT * FROM SystemSetting WHERE Name = @Name;";
@@ -234,7 +234,7 @@ public class SystemRepository : BaseRepository, Interfaces.ISystemRepository
     /// <summary>Get system settings.</summary>
     public IList<Entities.SystemSetting> GetSettings()
     {
-        using(var sqlConnection = new System.Data.SqlClient.SqlConnection(_sqlConnectionString))
+        using(var sqlConnection = new System.Data.SQLite.SQLiteConnection(_sqlConnectionString))
         using(var sqlCommand = sqlConnection.CreateCommand()) {
             sqlConnection.Open();
             sqlCommand.CommandText = "SELECT * FROM SystemSetting ORDER BY ApplicationName ASC, Name ASC;";
@@ -257,7 +257,7 @@ public class SystemRepository : BaseRepository, Interfaces.ISystemRepository
     /// <summary>Set (UPDATE) system log.</summary>
     public Entities.SystemLog SetLog(Entities.SystemLog l)
     {
-        using(var sqlConnection = new System.Data.SqlClient.SqlConnection(_sqlConnectionString))
+        using(var sqlConnection = new System.Data.SQLite.SQLiteConnection(_sqlConnectionString))
         using(var sqlCommand = sqlConnection.CreateCommand()) {
             sqlConnection.Open();
             sqlCommand.CommandText = "UPDATE SystemLog SET Thread = @Thread, Logger = @Logger, Message = @Message, Exception = @Exception WHERE Id = @Id;";
@@ -277,11 +277,11 @@ public class SystemRepository : BaseRepository, Interfaces.ISystemRepository
     /// <summary>Set (UPDATE) system setting.</summary>
     public Entities.SystemSetting SetSetting(Entities.SystemSetting s)
     {
-        using(var sqlConnection = new System.Data.SqlClient.SqlConnection(_sqlConnectionString))
+        using(var sqlConnection = new System.Data.SQLite.SQLiteConnection(_sqlConnectionString))
         using(var sqlCommand = sqlConnection.CreateCommand()) {
             sqlConnection.Open();
             sqlCommand.CommandText = "UPDATE SystemSetting SET ApplicationName = @ApplicationName, Name = @Name, Value = @Value, DateModified = @DateModified WHERE Id = @Id;";
-            sqlCommand.Parameters.AddWithValue("@Id", s.Id);
+            sqlCommand.Parameters.AddWithValue("@Id", s.Id.ToString());
             sqlCommand.Parameters.AddWithValue("@ApplicationName", s.ApplicationName);
             sqlCommand.Parameters.AddWithValue("@Name", s.Name);
             sqlCommand.Parameters.AddWithValue("@Value", s.Value);

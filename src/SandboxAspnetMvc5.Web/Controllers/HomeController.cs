@@ -52,6 +52,12 @@ public class HomeController : BaseController
 
         return View();
     }
+
+    /// <summary>GET /Home/Contact</summary>
+    public String Raw()
+    {
+        return "Raw";
+    }
 }
 
 }

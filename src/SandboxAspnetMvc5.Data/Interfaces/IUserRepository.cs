@@ -21,7 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SandboxAspnetMvc5.Data.Repositories {
+namespace SandboxAspnetMvc5.Data.Interfaces {
 
 /// <summary>User repository interface.</summary>
 /// <remarks>
