@@ -30,7 +30,7 @@ public class HomeController : BaseController
         return View();
     }
 
-    /// <summary>GET /Home/Contact</summary>
+    /// <summary>GET /Home/Sandbox</summary>
     public ActionResult Sandbox()
     {
         System.Text.StringBuilder sbDebug = new System.Text.StringBuilder();
@@ -39,13 +39,13 @@ public class HomeController : BaseController
         // http://www.hanselman.com/blog/ASPNETParamsCollectionVsQueryStringFormsVsRequestindexAndDoubleDecoding.aspx
 
         sbDebug.AppendFormat("\n<div>\n");
-        sbDebug.AppendFormat("HTTP Query String Echo : {0}", Helpers.CollectionHelper.HasKey(Request.QueryString, "echo"));
+        sbDebug.AppendFormat("Request QueryString Echo : {0}", Helpers.CollectionHelper.HasKey(Request.QueryString, "echo"));
         sbDebug.AppendFormat("\n<br />\n");
-        sbDebug.AppendFormat("HTTP Query String Echo : {0}", Request.QueryString["echo"] ?? "null");
+        sbDebug.AppendFormat("Request QueryString Echo : {0}", Request.QueryString["echo"] ?? "null");
         sbDebug.AppendFormat("\n<br />\n");
-        sbDebug.AppendFormat("HTTP Query String Message : {0}", Helpers.CollectionHelper.HasKey(Request.QueryString, "message"));
+        sbDebug.AppendFormat("Request QueryString Message : {0}", Helpers.CollectionHelper.HasKey(Request.QueryString, "message"));
         sbDebug.AppendFormat("\n<br />\n");
-        sbDebug.AppendFormat("HTTP Query String Message : {0}", Request.QueryString["message"] ?? "null");
+        sbDebug.AppendFormat("Request QueryString Message : {0}", Request.QueryString["message"] ?? "null");
         sbDebug.AppendFormat("\n</div>\n");
 
         ViewBag.DebugInformation = sbDebug.ToString();
@@ -53,7 +53,7 @@ public class HomeController : BaseController
         return View();
     }
 
-    /// <summary>GET /Home/Contact</summary>
+    /// <summary>GET /Home/Raw</summary>
     public String Raw()
     {
         return "Raw";
