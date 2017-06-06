@@ -1,4 +1,4 @@
-# Sandbox ASP.NET MVC 5
+# Sandbox ASP.NET MVC on .NET Framework
 
 Contributions are welcome. Feel free to submit issues if you run into problems or you have suggestions on how to improve it!
 
