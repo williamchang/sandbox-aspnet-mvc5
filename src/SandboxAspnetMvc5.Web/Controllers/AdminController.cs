@@ -17,10 +17,15 @@ public class AdminController : BaseController
     /// <summary>Default constructor.</summary>
     public AdminController()
     {
-        System.Diagnostics.Debug.WriteLine(String.Format("{0} : Constructor Started", ObjectTypeFullName));
+        System.Diagnostics.Debug.WriteLine("{0} : Constructor Started", ObjectTypeFullName, String.Empty);
+
         _repoSystem = new Data.SQLite.Repositories.SystemRepository(GetDatabaseConnectionString("SQLite"));
-        _repoUser = new Data.Repositories.UserRepository(GetDatabaseConnectionString());
-        System.Diagnostics.Debug.WriteLine(String.Format("{0} : Constructor Ended", ObjectTypeFullName));
+        _repoUser = new Data.SQLite.Repositories.UserRepository(GetDatabaseConnectionString("SQLite"));
+
+        //_repoSystem = new Data.Repositories.SystemRepository(GetDatabaseConnectionString());
+        //_repoUser = new Data.Repositories.UserRepository(GetDatabaseConnectionString());
+
+        System.Diagnostics.Debug.WriteLine("{0} : Constructor Ended", ObjectTypeFullName, String.Empty);
     }
 
     /// <summary>Argument constructor.</summary>

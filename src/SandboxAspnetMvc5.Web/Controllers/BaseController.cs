@@ -51,9 +51,9 @@ public abstract class BaseController : Controller
     /// <summary>Default constructor.</summary>
     public BaseController() : base()
     {
-        System.Diagnostics.Debug.WriteLine(String.Format("{0} : Constructor Started", ObjectTypeFullName));
+        System.Diagnostics.Debug.WriteLine("{0} : Constructor Started", ObjectTypeFullName, String.Empty);
         // Do something.
-        System.Diagnostics.Debug.WriteLine(String.Format("{0} : Constructor Ended", ObjectTypeFullName));
+        System.Diagnostics.Debug.WriteLine("{0} : Constructor Ended", ObjectTypeFullName, String.Empty);
     }
 
     /// <summary>Get database connection string.</summary>

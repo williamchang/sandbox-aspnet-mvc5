@@ -1,4 +1,5 @@
 ## Set certain folders/files or patterns to be ignored.
+## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # User-specific files from Visual Studio
 .vs/
@@ -27,7 +28,7 @@ bld/
 *.pubxml
 *.publishproj
 
-# NuGet
+# NuGet Packages
 *.nupkg
 # The packages folder can be ignored because of Package Restore
 **/packages/*
@@ -35,7 +36,7 @@ bld/
 !**/packages/build/
 # Uncomment if necessary however generally it will be regenerated when needed
 #!**/packages/repositories.config
-# NuGet v3's project.json files produces more ignoreable files
+# NuGet v3's project.json files produces more ignorable files
 *.nuget.props
 *.nuget.targets
 
